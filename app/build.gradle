@@ -45,4 +45,7 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.31.1'
     //适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //下拉刷新
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    //implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
 }

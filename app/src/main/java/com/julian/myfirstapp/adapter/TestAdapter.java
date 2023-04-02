@@ -23,6 +23,7 @@ public class TestAdapter extends BaseQuickAdapter<TestItemBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, TestItemBean item) {
+        helper.addOnClickListener(R.id.iv);
         helper.setText(R.id.title,item.getTitle())
         .setText(R.id.subTitle,item.getSubTitle())
         .setText(R.id.date,item.getDate());

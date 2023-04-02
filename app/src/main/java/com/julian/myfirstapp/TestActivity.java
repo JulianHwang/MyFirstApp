@@ -1,26 +1,59 @@
 package com.julian.myfirstapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.julian.myfirstapp.adapter.TestAdapter;
 import com.julian.myfirstapp.bean.TestItemBean;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 
 public class TestActivity extends AppCompatActivity {
 
     private RecyclerView rv;
+    private SmartRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
+                return new ClassicsHeader(context);
+            }
+        });
+
+        SmartRefreshLayout.setDefaultRefreshFooterCreator(new DefaultRefreshFooterCreator() {
+            @NonNull
+            @Override
+            public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout layout) {
+                return new ClassicsFooter(context);
+            }
+        });
+
         BarUtils.transparentStatusBar(this);
         View statusBarView = findViewById(R.id.statusBarView);
         statusBarView.getLayoutParams().height = BarUtils.getStatusBarHeight();
@@ -41,5 +74,49 @@ public class TestActivity extends AppCompatActivity {
          rv = (RecyclerView) findViewById(R.id.rv);
         TestAdapter testAdapter = new TestAdapter(list);
         rv.setAdapter(testAdapter);
+        testAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ToastUtils.showShort("您点击的位置下标是："+position);
+            }
+        });
+        testAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId()==R.id.iv){
+                    ToastUtils.showShort("您点击图片的Item位置下标是："+position);
+                }
+            }
+        });
+
+
+         refreshLayout = (SmartRefreshLayout)findViewById(R.id.refreshLayout);
+         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+             @Override
+             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                 ToastUtils.showShort("正在刷新...");
+                 new Handler().postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                         refreshLayout.finishRefresh();
+                     }
+                 },3000);
+             }
+         });
+
+         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+             @Override
+             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                 ToastUtils.showShort("正在加载更多...");
+                 new Handler().postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                         refreshLayout.finishLoadMore();
+                     }
+                 },3000);
+             }
+         });
+
+
     }
 }
