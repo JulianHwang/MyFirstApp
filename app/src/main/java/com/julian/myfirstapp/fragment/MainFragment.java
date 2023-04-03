@@ -10,12 +10,15 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.julian.myfirstapp.R;
 import com.julian.myfirstapp.TestActivity;
 import com.julian.myfirstapp.adapter.ImageBannerAdapter;
 import com.julian.myfirstapp.adapter.MainFragmentAdapter;
+import com.julian.myfirstapp.adapter.MainFragmentAdapter2;
 import com.julian.myfirstapp.bean.BannerBean;
 import com.julian.myfirstapp.bean.HomeItemBean;
+import com.julian.myfirstapp.bean.TestItemBean;
 import com.youth.banner.Banner;
 import com.youth.banner.config.IndicatorConfig;
 import com.youth.banner.indicator.CircleIndicator;
@@ -29,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MainFragment extends Fragment {
@@ -92,13 +96,27 @@ public class MainFragment extends Fragment {
         lly_c = (LinearLayout)view.findViewById(R.id.lly_c);
         lly_d = (LinearLayout)view.findViewById(R.id.lly_d);
         rv = (RecyclerView)view.findViewById(R.id.rv);
-        ArrayList<HomeItemBean> list = new ArrayList<>();
+        ArrayList<MultiItemEntity> list = new ArrayList<>();
         list.add(new HomeItemBean(pic1,"title1"));
         list.add(new HomeItemBean(pic2,"title2"));
-        list.add(new HomeItemBean(pic3,"title3"));
-        list.add(new HomeItemBean(pic1,"title4"));
-        MainFragmentAdapter adapter = new MainFragmentAdapter(list);
-        rv.setAdapter(adapter);
+        list.add(new TestItemBean(pic2,"title3","subtitle3","2023-03-01"));
+        list.add(new HomeItemBean(pic3,"title4"));
+        list.add(new HomeItemBean(pic1,"title5"));
+        //MainFragmentAdapter adapter = new MainFragmentAdapter(list);
+        MainFragmentAdapter2 adapter2 = new MainFragmentAdapter2(list);
+        rv.setAdapter(adapter2);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        rv.setLayoutManager(gridLayoutManager);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter2.getData().get(position).getItemType()==1){
+                    return 2;
+                }
+                return 1;
+            }
+        });
 
         ArrayList<BannerBean> bannerBeanList = new ArrayList<>();
         bannerBeanList.add(new BannerBean("1","aaa",pic1));

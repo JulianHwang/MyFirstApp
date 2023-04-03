@@ -1,6 +1,8 @@
 package com.julian.myfirstapp.bean;
 
-public class HomeItemBean {
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+public class HomeItemBean implements MultiItemEntity {
     private String picUrl;
     private String title;
 
@@ -23,5 +25,10 @@ public class HomeItemBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int getItemType() {
+        return 0;
     }
 }

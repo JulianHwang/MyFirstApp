@@ -1,6 +1,8 @@
 package com.julian.myfirstapp.bean;
 
-public class TestItemBean {
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+public class TestItemBean implements MultiItemEntity {
 
     private String picUrl;
     private String title;
@@ -44,5 +46,10 @@ public class TestItemBean {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public int getItemType() {
+        return 1;
     }
 }
