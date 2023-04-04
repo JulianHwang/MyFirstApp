@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.julian.myfirstapp.R;
 import com.julian.myfirstapp.TestActivity;
+import com.julian.myfirstapp.TestGroupListActivity;
 import com.julian.myfirstapp.adapter.ImageBannerAdapter;
 import com.julian.myfirstapp.adapter.MainFragmentAdapter;
 import com.julian.myfirstapp.adapter.MainFragmentAdapter2;
@@ -69,7 +70,9 @@ public class MainFragment extends Fragment {
         lly_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"b被点了",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"b被点了",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), TestGroupListActivity.class);
+                startActivity(intent);
             }
         });
         lly_c.setOnClickListener(new View.OnClickListener() {
