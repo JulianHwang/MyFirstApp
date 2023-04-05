@@ -56,7 +56,7 @@ public class TestGroupListActivity extends AppCompatActivity {
 
         TestGroupListAdapter adapter = new TestGroupListAdapter(getData(list));
         rv.setAdapter(adapter);
-        adapter.expandAll();//注意:这句不加的话子列表不会显示
+        adapter.expandAll();//注意:这句不加的话子列表不会显示！
     }
 
     public ArrayList<MultiItemEntity> getData(List<GroupDataBean> resultBeanList) {
