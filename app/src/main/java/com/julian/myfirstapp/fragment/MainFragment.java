@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.julian.myfirstapp.R;
 import com.julian.myfirstapp.TestActivity;
 import com.julian.myfirstapp.TestGroupListActivity;
+import com.julian.myfirstapp.TestWebViewActivity;
 import com.julian.myfirstapp.adapter.ImageBannerAdapter;
 import com.julian.myfirstapp.adapter.MainFragmentAdapter;
 import com.julian.myfirstapp.adapter.MainFragmentAdapter2;
@@ -78,7 +79,8 @@ public class MainFragment extends Fragment {
         lly_c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"c被点了",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"c被点了",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), TestWebViewActivity.class));
             }
         });
         lly_d.setOnClickListener(new View.OnClickListener() {
