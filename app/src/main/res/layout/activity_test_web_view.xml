@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".TestWebViewActivity">
 
+    <include layout="@layout/common_title"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:background="@color/white"
+        android:progressBackgroundTint="@color/white"
+        android:indeterminateTint="@color/blue42"
+        android:indeterminateTintMode="src_atop"/>
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
