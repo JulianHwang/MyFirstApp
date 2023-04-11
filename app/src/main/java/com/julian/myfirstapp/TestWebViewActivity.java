@@ -18,9 +18,11 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 public class TestWebViewActivity extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class TestWebViewActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private TextView tv_title;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class TestWebViewActivity extends AppCompatActivity {
     }
 
     private void initView() {
+         frameLayout = (FrameLayout)findViewById(R.id.frameLayout);
         tv_title = (TextView)findViewById(R.id.tv_title);
         findViewById(R.id.iv_back).setOnClickListener(v -> {onBackPressed();});
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -63,11 +67,11 @@ public class TestWebViewActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                /*if (url.contains("baidu")){
-                    ToastUtils.showShort("url包含baidu");
-                    webView.loadUrl("http://www.hao123.com");
+                if (url.contains("/hahaha")){
+                    ToastUtils.showShort("url包含/hahaha");
+                    //webView.loadUrl("http://www.hao123.com");
                     return true;
-                }*/
+                }
                 return false;
             }
 
@@ -103,6 +107,22 @@ public class TestWebViewActivity extends AppCompatActivity {
                 super.onReceivedTitle(view, title);
                 tv_title.setText(TextUtils.isEmpty(title)?"":title);
 
+            }
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                super.onShowCustomView(view, callback);
+                ScreenUtils.setLandscape(TestWebViewActivity.this);
+                frameLayout.addView(view);
+                frameLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onHideCustomView() {
+                super.onHideCustomView();
+                frameLayout.removeAllViews();
+                frameLayout.setVisibility(View.GONE);
+                ScreenUtils.setPortrait(TestWebViewActivity.this);
             }
         };
 

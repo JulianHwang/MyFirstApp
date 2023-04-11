@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MyFirstApp">
-        <activity android:name=".TestWebViewActivity"></activity>
+        <activity android:name=".TestWebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".TestGroupListActivity" />
         <activity android:name=".TestActivity" />
         <activity android:name=".SecondActivity" />
