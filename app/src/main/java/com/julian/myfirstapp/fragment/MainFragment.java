@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.julian.myfirstapp.R;
+import com.julian.myfirstapp.SecondActivity;
 import com.julian.myfirstapp.TestActivity;
 import com.julian.myfirstapp.TestGroupListActivity;
 import com.julian.myfirstapp.TestWebViewActivity;
@@ -86,7 +87,8 @@ public class MainFragment extends Fragment {
         lly_d.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"d被点了",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"d被点了",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), SecondActivity.class));
             }
         });
     }
