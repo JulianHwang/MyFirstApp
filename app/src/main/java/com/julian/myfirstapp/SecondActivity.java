@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.BarUtils;
 import com.bumptech.glide.Glide;
 import com.julian.myfirstapp.utils.GlideEngine;
 import com.luck.picture.lib.basic.PictureSelector;
@@ -37,9 +38,14 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         Log.d("TAG","Second-onCreate--");
 
-        TextView tv2 = findViewById(R.id.tv2);
-         img = findViewById(R.id.img);
-        tv2.setOnClickListener(view -> selectPic());
+        BarUtils.transparentStatusBar(this);
+        View statusBarView = findViewById(R.id.statusBarView);
+        statusBarView.getLayoutParams().height = BarUtils.getStatusBarHeight();
+        findViewById(R.id.iv_back).setOnClickListener(v -> {finish();});
+        ((TextView)findViewById(R.id.tv_title)).setText("添加物品");
+
+        img = findViewById(R.id.img);
+        img.setOnClickListener(view -> selectPic());
     }
 
     private void selectPic() {
