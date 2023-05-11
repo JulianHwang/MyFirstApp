@@ -3,14 +3,19 @@ package com.julian.myfirstapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.icu.text.SelectFormat;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.julian.myfirstapp.utils.GlideEngine;
 import com.luck.picture.lib.basic.PictureSelector;
@@ -31,6 +36,9 @@ import java.util.List;
 public class SecondActivity extends AppCompatActivity {
 
     private ImageView img;
+    private EditText et_a;
+    private EditText et_b;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +54,40 @@ public class SecondActivity extends AppCompatActivity {
 
         img = findViewById(R.id.img);
         img.setOnClickListener(view -> selectPic());
+
+        et_a = (EditText)findViewById(R.id.et_a);
+        et_b = (EditText)findViewById(R.id.et_b);
+
+        findViewById(R.id.tv_submit).setOnClickListener(view -> {
+            Intent intent = new Intent();
+            if (checkInfo()){
+                intent.putExtra("name",et_a.getText().toString().trim());
+                intent.putExtra("score",et_b.getText().toString().trim());
+                intent.putExtra("pic_path",path);
+                setResult(Activity.RESULT_OK,intent);
+                finish();
+            }
+
+        });
     }
+
+    private boolean checkInfo() {
+        if (TextUtils.isEmpty(et_a.getText().toString().trim())){
+            ToastUtils.showShort("请输入物品名称");
+            return false;
+        }
+        if (TextUtils.isEmpty(et_b.getText().toString().trim())){
+            ToastUtils.showShort("请输入物品对应分值");
+            return false;
+        }
+        if (TextUtils.isEmpty(path)){
+            ToastUtils.showShort("请添加图片");
+            return false;
+        }
+
+        return true;
+    }
+
 
     private void selectPic() {
         AndPermission.with(this).runtime()
@@ -75,7 +116,7 @@ public class SecondActivity extends AppCompatActivity {
                 .forResult(new OnResultCallbackListener<LocalMedia>() {
                     @Override
                     public void onResult(ArrayList<LocalMedia> result) {
-                        String path = result.get(0).getPath();
+                         path = result.get(0).getPath();
                         Log.d("TAG","select-pic-path="+path);
                         Glide.with(SecondActivity.this)
                                 .load(path)

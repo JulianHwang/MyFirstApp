@@ -1,10 +1,13 @@
 package com.julian.myfirstapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -32,6 +35,7 @@ public class TestActivity extends AppCompatActivity {
 
     private RecyclerView rv;
     private SmartRefreshLayout refreshLayout;
+    private TestAdapter testAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,12 @@ public class TestActivity extends AppCompatActivity {
         statusBarView.getLayoutParams().height = BarUtils.getStatusBarHeight();
         findViewById(R.id.iv_back).setOnClickListener(v -> {finish();});
         ((TextView)findViewById(R.id.tv_title)).setText("村红特产");
+        TextView tv_right = findViewById(R.id.tv_right);
+        tv_right.setText("添加");
+        tv_right.setOnClickListener(view -> {
+            Intent intent = new Intent(TestActivity.this, SecondActivity.class);
+            startActivityForResult(intent,101);
+        });
 
         String pic1="https://img1.baidu.com/it/u=307074048,654359288&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500";
         String pic2="https://lmg.jj20.com/up/allimg/1114/062621110J7/210626110J7-10-1200.jpg";
@@ -72,7 +82,7 @@ public class TestActivity extends AppCompatActivity {
         list.add(new TestItemBean(pic1,"title4","subTitle4","2023-06-30"));
         list.add(new TestItemBean(pic2,"title5","subTitle5","2023-07-30"));
          rv = (RecyclerView) findViewById(R.id.rv);
-        TestAdapter testAdapter = new TestAdapter(list);
+         testAdapter = new TestAdapter(list);
         rv.setAdapter(testAdapter);
         testAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -118,5 +128,22 @@ public class TestActivity extends AppCompatActivity {
          });
 
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==101){
+            if (resultCode== Activity.RESULT_OK){
+                if (data!=null){
+                    String name = data.getStringExtra("name");
+                    String score = data.getStringExtra("score");
+                    String pic_path = data.getStringExtra("pic_path");
+                    TestItemBean testItemBean = new TestItemBean(pic_path, name, score, "2023-04-22");
+                    testAdapter.addData(testItemBean);
+                }
+            }
+        }
     }
 }
